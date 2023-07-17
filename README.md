@@ -17,8 +17,23 @@ You can also do this to use the remote container that is already built for you:
 docker run -it --rm -v $(pwd):/cart konsumer/null0
 ```
 
-I've only tested/built on amd64, and you will probably have issues on arm64.
+## build process
+
+This is what I do to build/publish:
+
+```
+# setup initial buildx
+docker buildx create --name buildx_builder --use --bootstrap
+
+# build & publish container
+docker buildx build --platform=linux/amd64 . --tag konsumer/null0:latest
+docker push konsumer/null0:latest
+```
+
+I disabled `linux/arm64` platform because wasi-sdk has bugs there.
 
 This will give you wasmer/clang/llvm/wasm-sdk/nim/zig/make/cmake/gcc/rust/nodejs/assemblyscript/binaryen/wabt for building and working with carts.
 
-I have left out emscripten, since we are going for very light wasm, without a lot of host-dependencies, and it can create some conflicts with the llvm-focused setup. I should look into this, especially ideas in [this](https://github.com/emscripten-core/emscripten/wiki/WebAssembly-Standalone) which will essentiually create similar light builds, but allow you to see & tune the JS.
+I have left out emscripten, since we are going for very light wasm, without a lot of host-dependencies, and it can create some conflicts with the llvm-only light setup.
+
+I should look into this, especially ideas in [this](https://github.com/emscripten-core/emscripten/wiki/WebAssembly-Standalone) which will essentiually create similar light builds, but allow you to see & tune the JS.
