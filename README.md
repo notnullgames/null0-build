@@ -29,8 +29,8 @@ docker buildx create --name buildx_builder --use --bootstrap
 docker buildx build --tag konsumer/null0:latest --push --platform=linux/amd64,linux/arm64 .
 
 # this is current procedure for only amd64
-docker build -t null0 .
-docker push null0
+docker build -t konsumer/null0 .
+docker push konsumer/null0
 ```
 
 I disabled `linux/arm64` platform because wasi-sdk has bugs there.
