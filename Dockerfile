@@ -17,7 +17,7 @@ ADD https://deb.nodesource.com/setup_20.x /tmp/install_node.sh
 ADD https://github.com/wasmerio/wasmer/releases/download/v4.0.0-alpha.1/wasmer-linux-amd64.tar.gz /tmp/wasmer.tgz
 
 RUN apt-get update && \
-  apt-get install -y wabt binaryen curl make cmake xz-utils && \
+  apt-get install -y wabt binaryen curl make cmake xz-utils zip && \
   cd /opt && \
   tar xvf wasi-sdk-${WASI_VERSION_FULL}-linux.tar.gz && \
   dpkg -i /tmp/zig_0.6.0-1_amd64.deb && \
